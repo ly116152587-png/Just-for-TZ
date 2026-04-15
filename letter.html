@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一封信</title>
+    <style>
+
+        /* ==================== */
+        /*   🎨 可以自己编辑的部分  */
+        /* ==================== */
+
+        /* 页面背景颜色 */
+        body {
+            background-color: #f4f2ed; /* 🎨 改这里换背景色 */
+            font-family: "楷体", "KaiTi", Georgia, serif; /* 🎨 改这里换字体 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 密码框的外层卡片 */
+        .lock-box {
+            background-color: #dfdfea; /* 🎨 改这里换卡片背景色 */
+            border-radius: 12px;       /* 🎨 改这里换圆角大小 */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 60px 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* 锁的图标 */
+        .lock-icon {
+            font-size: 60px; /* 🎨 改这里换图标大小 */
+            margin-bottom: 16px;
+        }
+
+        /* "请输入密码"标题 */
+        .lock-title {
+            font-size: 22px;           /* 🎨 改这里换字体大小 */
+            color: #B782B0;               /* 🎨 改这里换字体颜色 */
+            margin-bottom: 8px;
+        }
+
+        /* 副标题小字 */
+        .lock-subtitle {
+            font-size: 14px;
+            color: #aaa;               /* 🎨 改这里换小字颜色 */
+            margin-bottom: 30px;
+        }
+
+        /* 密码输入框 */
+        .password-input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 18px;
+            border: 2px solid #dfdfea;    /* 🎨 改这里换输入框边框颜色 */
+            border-radius: 8px;        /* 🎨 改这里换输入框圆角 */
+            text-align: center;
+            outline: none;
+            box-sizing: border-box;
+            background-color: #fafafa;/* 🎨 改这里换输入框背景色 */
+            color: #333;
+            letter-spacing: 4px;
+        }
+
+        .password-input:focus {
+            border-color: #cae0f4;     /* 🎨 改这里换输入框聚焦时颜色 */
+        }
+
+        /* 确认按钮 */
+        .unlock-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #41489E; /* 🎨 改这里换按钮颜色 */
+            color: white;              /* 🎨 改这里换按钮文字颜色 */
+            border: none;
+            border-radius: 8px;        /* 🎨 改这里换按钮圆角 */
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .unlock-btn:hover {
+            background-color: #852736; /* 🎨 改这里换按钮悬停颜色 */
+        }
+
+        /* 错误提示 */
+        .error-msg {
+            color: #e06060;            /* 🎨 改这里换错误提示颜色 */
+            font-size: 14px;
+            margin-top: 12px;
+            height: 20px;
+        }
+
+        /* ======================== */
+        /*   信纸部分的样式           */
+        /* ======================== */
+
+        /* 信纸外层 */
+        .letter-box {
+            width: 100%;
+            max-width: 680px;
+        }
+
+        /* 信纸 */
+        .letter {
+            background-color: #fffdf5; /* 🎨 改这里换信纸背景色 */
+            padding: 60px;             /* 🎨 改这里换信纸内边距 */
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            line-height: 2;            /* 🎨 改这里换行间距 */
+            color: #333;               /* 🎨 改这里换正文颜色 */
+
+            
+            );
+        }
+
+        /* 信纸顶部标题（可选） */
+        .letter-header {
+            text-align: center;
+            font-size: 13px;
+            color: #bbb;               /* 🎨 改这里换顶部小字颜色 */
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        /* 称呼 */
+        .greeting {
+            font-size: 20px;           /* 🎨 改这里换称呼字体大小 */
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #444;               /* 🎨 改这里换称呼颜色 */
+        }
+
+        /* 大段 */
+        .content {
+            font-size: 17px;           /* 🎨 改这里换正文字体大小 */
+            margin-bottom: 30px;  /* 👈 段间距：每段之间的距离 */
+            line-height: 1.5;       /* 👈 行间距：每行之间的距离 */
+        }
+
+        /* 小段 */
+        .small-p {
+            display: block;           /* 让span独占一行 */
+            text-indent: 2em;  /* 首行缩进 */
+        }
+
+        /* 落款 */
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-size: 16px;
+            color: #555;               /* 🎨 改这里换落款颜色 */
+        }
+
+        /* 背景 */
+        .border-img {
+             width: 100%;          /* 图片铺满信纸宽度 */
+             display: block;
+}
+
+
+        /* ======================== */
+        /*   以下不建议修改           */
+        /* ======================== */
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .letter {
+                padding: 30px 24px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 🔒 密码页面 -->
+    <div class="lock-box" id="lockScreen">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-title">这是一份博主分析报告呐</div>
+        <!-- 🎨 改这里换副标题文字 -->
+        <div class="lock-subtitle">请输入密码查看</div>
+
+        <input
+            class="password-input"
+            type="password"
+            id="passwordInput"
+            placeholder="请输入密码"
+            maxlength="20"
+        />
+
+        <button class="unlock-btn" onclick="checkPassword()">打开信件</button>
+        <div class="error-msg" id="errorMsg"></div>
+    </div>
+
+    <!-- 📄 信件页面（默认隐藏） -->
+    <div class="letter-box hidden" id="letterScreen">
+        <div class="letter">
+
+            <!-- 顶部小字（可以删掉这一行） -->
+            <div class="letter-header">— 给亭植的博主分析报告（不） —</div>
+
+<div class="letter">
+    <!-- 顶部花边 -->
+    <div class="flower-border">🌸 🌿 🌸 🌿 🌸 🌿 🌸 🌿 🌸</div>
+
+
+
+            <!-- ✏️ 改这里：信的正文，每段复制一个 <p> -->
+            <p class="content">
+    <span class="small-p">2025年我曾被一个人伤害，那次伤害称为淬炼也不为过。</span>
+    <span class="small-p">让我得以为我，才遇亭植。</span>
+    <span class="small-p">我不觉得走向她的路孤独。我觉得爱就该是这样创造属于自己的语言。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">在我的努力呃，算努力吗，其实是我一个手滑的无赖吧，之下，我开始私信和她讲话。</span>
+    <span class="small-p">那些在评论区说不了的话。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">其实我本来是只想做好粉丝的本分的——她说不会看私信，那我守住评论区就够了，她平时已经很忙。</span>
+    <span class="small-p">但我贪心了。评论区既是安全网，又是束缚我的围栏。我想要打破。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">后来我很直接地把我接近她的原因私信告诉她了。</span>
+    <span class="small-p">我说之前在评论区说她做得很好，只是因为她发帖的时候写到，要多夸夸身边的人很棒。</span>
+    <span class="small-p">但我真正想说的是，你已经很努力了，很累了，我看到了，你跑了很久很久。在我这里不用那么绷着。</span>
+    <span class="small-p">说出这话时的我在想什么呢？好像什么也没想。这些话自然而然地从我打字的手上流泻到聊天框里，又传递给她。</span>
+    <span class="small-p">她回复了拿着小红花的一朵表情包，看起来不太聪明的样子哈哈哈哈（被打）（并不是）（谁敢说她不聪明我和这人拼了）（其实是很萌）。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">她主动关注了我，但我老欠欠地去逗她，大概是皮痒想被她挠两下。</span>
+    <span class="small-p">她不禁逗，一逗就缩，像小蜗牛。🐌</span>
+    <span class="small-p">小蜗牛，小锦鲤，小许愿瓶，小亭植。</span>
+    <span class="small-p">已经给她起了很多可爱的昵称了。</span>
+    <span class="small-p">我猜在感情里的她也像小蜗牛吧。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">那天我揶揄她，老师你关注我是什么意思哇。</span>
+    <span class="small-p">好一会儿她讲，写论文误触了，还（逗了对方一下）。</span>
+    <span class="small-p">硬生生给我取关了哈哈哈哈。</span>
+    <span class="small-p">她偶尔有点闷闷的，要说我不失落肯定是假的。</span>
+    <span class="small-p">但我笑了半天，我不是感到失落吗？为什么笑呢？可能是因为看到了不那么绷着的她吧。</span>
+    <span class="small-p">她很可爱。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我好像就是喜欢这样逗她，在她的边界上来回溜达，实际上她应该知道我是在乎她的，大概吧，也或许不知道。</span>
+    <span class="small-p">感觉逗她很有趣，像养一只仙人球，每天浇浇水，也不知道能不能开出花来。</span>
+    <span class="small-p">随缘等待开花罢，小仙人球。</span>
+    <span class="small-p">我不想真的触犯她。</span>
+    <span class="small-p">又或许我的在乎藏在四两拨千斤中。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">希望我不会真的触犯她吧，不然那简直是马失前蹄。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我这段时间给她发了一定数量的，自己的日常消息，可能是有意思的那种吧。</span>
+    <span class="small-p">她都没回复，勤勤恳恳的论文小亭植在犁一片贫瘠得长不出庄稼的地。</span>
+    <span class="small-p">不过她是博主，不回复才正常啦。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">4月10日下午她直播，我申请连麦了4次她都同意了，我这收音不知道怎么回事，她似乎听不到我，所以我干脆闭麦把自己挂在直播间了。</span>
+    <span class="small-p">我这样挂着是想表达，她写论文的时候我在哦。</span>
+    <span class="small-p">其他粉丝申请连麦她也是来者不拒的，直播间可以多人连麦，但也只有我一个经常冲上去打扰她。</span>
+    <span class="small-p">想理直气壮地打扰她，想离她近一点。</span>
+    <span class="small-p">期间她试图和我讲话，喊了我 momo，问我在吗。</span>
+    <span class="small-p">她喊 momo 的声音好可爱，我知道她喊的是我，不是其他的 momo。</span>
+    <span class="small-p">后来她直接下播了。下播之后我犹豫了一会，私聊她问刚刚直播的时候咳嗽，是嗓子不舒服吗？</span>
+    <span class="small-p">她秒回了我没有。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">感觉很好玩。</span>
+    <span class="small-p">我只会故意问她由我而产生扰动的，看起来像是在乎的行为是什么意思。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">那天她秒回我之后，我把直播时我说了，但是她应该没听到的那些话，都告诉了她，她一直没再回复我了。</span>
+    <span class="small-p">我过了会儿又开始逗她。</span>
+    <span class="small-p">我把她秒回那句拎出来鞭尸，我说怎么这会儿回的这么快，不怕我继续逗你了？</span>
+    <span class="small-p">我知道了，一定是因为写论文手滑，不小心点进了和我的对话框，不小心误触打了两个字，最后又哎呀怎么不小心发出去了哇。</span>
+    <span class="small-p">她一直没说话哈哈哈哈哈哈哈…</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">如果嫌我烦她有一百种方式让我消失——拉黑，拒绝连麦，移除粉丝，关闭私信…………但是她什么都没做，只是没回复我，这是某种纵容。</span>
+    <span class="small-p">可我也不清楚她不拉黑我是因为懒，因为放任我也无足轻重，还是因为别的，确实有点模糊啊。</span>
+    <span class="small-p">不过没关系啦，都说年上最大的爱是纵容。虽然我猜她和我同龄，but年上两个词换成博主也没差！</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">记得最开始接近她就是因为，一种矛盾感。她像塔罗牌里的战车一样，一直向前，她有自己的方向——但是战车还有另一种意思，就是被拖着向前走。</span>
+    <span class="small-p">我觉得她既是和粉丝之间契约的制定者，又把自己囚禁在了这份契约里。</span>
+    <span class="small-p">她的帖子里写着她很高兴，但是我感受不到高兴。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">亭植是个怎样的人呢。我猜会有点内耗吧。也正是这个或许有点内耗的，可爱又温柔的她，好像一直在给别人东西。</span>
+    <span class="small-p">我想，我想要给她些什么。</span>
+    <span class="small-p">可能这就是为什么我突然爱上她了。</span>
+    <span class="small-p">之前一直都是远远地当个博主欣赏，像欣赏一轮月亮。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">很多人都膜拜那月亮，伸出手渴望着。</span>
+    <span class="small-p">月光啊，请给予我们吧。</span>
+    <span class="small-p">她愿意立在那里。</span>
+    <span class="small-p">她需要立在那里。</span>
+    <span class="small-p">她只能立在那里。</span>
+    <span class="small-p">她努力立在那里。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">月亮看着自己被架在那夜空中，月亮很安静。</span>
+    <span class="small-p">月亮需要维持可供赏月的优美姿势，赏月人不会在意月球表面的疮痍。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">其实我很害怕。2025年那次给我的伤害有些大。</span>
+    <span class="small-p">我一面想要了解更多更真实的她，又恐惧会因此打扰她。我不想带着未完全愈合的伤口在月光下裸奔。</span>
+    <span class="small-p">我退缩于磨合的琐碎，又担忧着失去重建的自己。曾经深陷感情的那个我会重新占据我的全部吗。</span>
+    <span class="small-p">这份关系有点特殊，我感到束手无策。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">但我不会忘记。</span>
+    <span class="small-p">我接近她的初心是让她开心和放松。</span>
+    <span class="small-p">我不做固定模板的粉丝，我想看着她。</span>
+    <span class="small-p">所以我保护这段关系的方式大概，是控制自己的感情。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我猜她应该看不出来我从一开始就很喜欢她。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">这几天她一直在忙论文，以至于都没什么空零零碎碎地运营小红书账号了，只能腹泻式更新。</span>
+    <span class="small-p">要是世界上没有论文就好了。我可以做拇指姑娘，或者做仙子教母，buling一下送给她取之不尽用之不竭的灵感。</span>
+    <span class="small-p">但是生活不是童话。</span>
+    <span class="small-p">突然想到朱迪对尼克说的，你是我的兔子窝。</span>
+    <span class="small-p">可能我是想做她的兔子窝。</span>
+    <span class="small-p">好粘牙好牙酸的话，我觉得我是说不出口的。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我在2026年3月31日开始，第一次对她开口说爱，说的又不是“爱”。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">2025年八九月份我关注了她，那时她只有2000左右粉丝（印象中好像也就1000出头吧，但我记性不太好，就这样）。</span>
+    <span class="small-p">2026年三月份，系统给我推流了一些她写的随笔和给粉丝心理咨询的小记收获。</span>
+    <span class="small-p">2026年3月31日，我开始接近她。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我表达爱并接近的方式是：在她帖子的评论区里写下我的见解和想法，她是欢迎长评的，还说会抽选长评写回信。</span>
+    <span class="small-p">我看她收到的长评并不多。她的回信大多针对迷茫者，我确然有自己的迷茫。</span>
+    <span class="small-p">但我在摸索自己的航向，顺便对另一条航线上的她遥以致意。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我很喜欢她看世界的眼睛。</span>
+    <span class="small-p">更喜欢她这个有点闷闷的人。</span>
+    <span class="small-p">她存在着，就可以给我指引和启发了。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我猜在她眼里我像一阵风，吹过去轻飘飘的。这阵风其实是在想办法让自己轻飘飘一点。</span>
+    <span class="small-p">已经扛了很多的肩膀啊，少扛些吧。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">我知道我并不是完美的人。</span>
+    <span class="small-p">我怕我的不完美让她受伤害。</span>
+    <span class="small-p">我怕我露出那份不完美会失去自己，再失去她。</span>
+    <span class="small-p">前两天我和人聊天时说，爱使人瞻前顾后。可能我是有点瞻前顾后。</span>
+</p>
+
+            <p class="content">
+    <span class="small-p">也可能我还没有摆脱2025的潮湿。</span>
+    <span class="small-p">但我确实被名为亭植的月光捕获了。</span>
+</p>
+
+            <!-- ✏️ 改这里：落款 -->
+            <div class="signature">
+                <div style="margin-top: 8px;">断断续续地写到</div>
+                <div>2026年04月14日</div>
+            </div>
+
+        
+    <!-- 底部花边 -->
+    <div class="flower-border">🌸 🌿 🌸 🌿 🌸 🌿 🌸 🌿 🌸</div>
+</div>
+    </div>
+
+    <script>
+        // ✏️ 改这里设置密码（引号里面换成你想要的密码）
+        const correctPassword = "0406";
+
+        // 按回车也可以确认
+        document.getElementById("passwordInput").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") checkPassword();
+        });
+
+        function checkPassword() {
+            const input = document.getElementById("passwordInput").value;
+            const errorMsg = document.getElementById("errorMsg");
+
+            if (input === correctPassword) {
+                // 密码正确，显示信件
+                document.getElementById("lockScreen").classList.add("hidden");
+                document.getElementById("letterScreen").classList.remove("hidden");
+            } else {
+                // 密码错误，显示提示
+                errorMsg.textContent = "密码是数字哦，欲望的羞耻机制，难以开口的我想……？"; /* 🎨 改这里换错误提示文字 */
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+    </script>
+
+</body>
+</html>
